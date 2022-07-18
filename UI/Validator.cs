@@ -30,10 +30,9 @@ public static class Validator
                 }
 
             }
-            catch (System.Exception)
+            catch
             {
-                
-                Console.WriteLine("Invalid Input!! Try Again.");
+                Utility.PrintMessage("Invalid Input!! Try Again.", false);
             }
         }
         return default;
