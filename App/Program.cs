@@ -9,8 +9,8 @@ namespace ATM
         static void Main(string[] args)
         {
             AppScreen.Welcome();
-            string name = Utility.GetUserInput("youre name");
-            Console.WriteLine($"Youre name is {name}");
+            long cardNumber = Validator.Convert<long>("youre card number");
+            Console.WriteLine($"Youre card number is {cardNumber}");
             Utility.PressEnterToContinue();
             
         }
