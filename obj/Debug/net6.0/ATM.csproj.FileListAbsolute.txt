@@ -1,0 +1,15 @@
+/home/pop/Desktop/net/ATM/bin/Debug/net6.0/ATM
+/home/pop/Desktop/net/ATM/bin/Debug/net6.0/ATM.deps.json
+/home/pop/Desktop/net/ATM/bin/Debug/net6.0/ATM.runtimeconfig.json
+/home/pop/Desktop/net/ATM/bin/Debug/net6.0/ATM.dll
+/home/pop/Desktop/net/ATM/bin/Debug/net6.0/ATM.pdb
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.csproj.AssemblyReference.cache
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.GeneratedMSBuildEditorConfig.editorconfig
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.AssemblyInfoInputs.cache
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.AssemblyInfo.cs
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.csproj.CoreCompileInputs.cache
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.dll
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/refint/ATM.dll
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.pdb
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ATM.genruntimeconfig.cache
+/home/pop/Desktop/net/ATM/obj/Debug/net6.0/ref/ATM.dll
