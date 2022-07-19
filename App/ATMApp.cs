@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ATM.Domain.Entities;
+using ATM.Domain.Interfaces;
+using ATM.UI;
 
 namespace ATM.App;
 
-public class ATMApp
+public class ATMApp : IUserLogin
 {
     private List<UserAccount> userAccountList = new List<UserAccount>();
     private UserAccount selectedAccount = new UserAccount();
@@ -43,5 +45,14 @@ public class ATMApp
                 IsLocked=false
             }
         };
+    }
+
+    public void CheckUserCredentials()
+    {
+        bool isCorrectLogin = false;
+
+        UserAccount tempUserAccount = new UserAccount();
+        tempUserAccount.CardNumber = Validator.Convert<long>("youre card number.");
+        tempUserAccount.CardPin = Convert.ToInt32(Utility.GetSecretInput("Enter youre card PIN")); 
     }
 }
