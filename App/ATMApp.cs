@@ -45,8 +45,8 @@ public class ATMApp : IUserLogin
                 AccountNumber = 04781298374756,
                 AccountBalance = 70235.468,
                 CardNumber = 321321,
-                CardPin = 4563159,
-                IsLocked = false
+                CardPin = 456315,
+                IsLocked = true
             }
         };
     }
@@ -82,18 +82,18 @@ public class ATMApp : IUserLogin
                         }
                     }
                 }
-            }
 
-            if (isCorrectLogin == false)
-            {
-                Utility.PrintMessage("\n Invalid card number or PIN", false);
-                selectedAccount.IsLocked = selectedAccount.TotalLogin == 3;
-                if (selectedAccount.IsLocked)
+                if (isCorrectLogin == false)
                 {
-                    AppScreen.PrintLockScreen();
+                    Utility.PrintMessage("\n Invalid card number or PIN", false);
+                    selectedAccount.IsLocked = selectedAccount.TotalLogin == 3;
+                    if (selectedAccount.IsLocked)
+                    {
+                        AppScreen.PrintLockScreen();
+                    }
                 }
+                Console.Clear();
             }
-            Console.Clear();
         }
     }
 
