@@ -11,7 +11,6 @@ namespace ATM.UI;
 
 public static class Utility
 {
-
     public static string GetSecretInput(string prompt)
     {
         bool isPrompt = true;
@@ -39,7 +38,7 @@ public static class Utility
                     continue;
                 }
             }
-            if (inputKey.Key == ConsoleKey.Backspace && input.Length > 0)   
+            if (inputKey.Key == ConsoleKey.Backspace && input.Length > 0)
             {
                 input.Remove(input.Length - 1, 1);
             }
@@ -53,7 +52,7 @@ public static class Utility
         return input.ToString();
     }
 
-    public static void PrintMessage(string msg, bool success=true)
+    public static void PrintMessage(string msg, bool success = true)
     {
         if (success)
         {
@@ -68,12 +67,22 @@ public static class Utility
         PressEnterToContinue();
     }
 
-
     public static string GetUserInput(string prompt)
     {
         Console.WriteLine($"Enter {prompt}");
         return Console.ReadLine();
     }
+
+    public static void PrintDotAnimation(int timer = 10)
+    {
+        for (int i = 0; i < timer; i++)
+        {
+            Console.Write(".");
+            Thread.Sleep(200);
+        }
+        Console.Clear();
+    }
+
     public static void PressEnterToContinue()
     {
         Console.WriteLine("Press enter to continue.....");

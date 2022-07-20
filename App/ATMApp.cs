@@ -17,32 +17,35 @@ public class ATMApp : IUserLogin
     {
         userAccountList = new List<UserAccount>
         {
-            new UserAccount {
+            new UserAccount
+            {
                 Id = 1,
                 FullName = "Hari Maharjan",
                 AccountNumber = 04781298374756,
                 AccountBalance = 70235.468,
                 CardNumber = 321321,
                 CardPin = 4563159,
-                IsLocked=false
+                IsLocked = false
             },
-             new UserAccount {
+            new UserAccount
+            {
                 Id = 2,
                 FullName = "Shyam Sharma",
                 AccountNumber = 04781298374756,
                 AccountBalance = 70235.468,
                 CardNumber = 321321,
                 CardPin = 4563159,
-                IsLocked=false
+                IsLocked = false
             },
-             new UserAccount {
+            new UserAccount
+            {
                 Id = 3,
                 FullName = "Michael Maharjan",
                 AccountNumber = 04781298374756,
                 AccountBalance = 70235.468,
                 CardNumber = 321321,
                 CardPin = 4563159,
-                IsLocked=false
+                IsLocked = false
             }
         };
     }
@@ -50,9 +53,7 @@ public class ATMApp : IUserLogin
     public void CheckUserCredentials()
     {
         bool isCorrectLogin = false;
-
-        UserAccount tempUserAccount = new UserAccount();
-        tempUserAccount.CardNumber = Validator.Convert<long>("youre card number.");
-        tempUserAccount.CardPin = Convert.ToInt32(Utility.GetSecretInput("Enter youre card PIN")); 
+        UserAccount inputAccount = AppScreen.UserLoginForm();
+        AppScreen.LoginProgress();
     }
 }
