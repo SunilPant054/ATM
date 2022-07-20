@@ -39,4 +39,15 @@ public static class AppScreen
         Console.WriteLine("Checking card number and PIN...");
         Utility.PrintDotAnimation();
     }
+
+    internal static void PrintLockScreen()
+    {
+        Console.Clear();
+        Utility.PrintMessage(
+            "Youre account is locked. Please go to the nearest branch for help. THANK YOU!!",
+            true
+        );
+        Utility.PressEnterToContinue();
+        Environment.Exit(1);
+    }
 }
