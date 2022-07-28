@@ -130,7 +130,7 @@ public class ATMApp : IUserLogin
                 Console.WriteLine("Logging out....");
                 break;
             default:
-                Console.WriteLine("default action.....");
+                Utility.PrintMessage("Invalid Option.", false);
                 break;
         }
     }
