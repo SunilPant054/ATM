@@ -8,14 +8,9 @@ namespace ATM
     {
         static void Main(string[] args)
         {
-            AppScreen.Welcome();
             ATMApp atmApp = new ATMApp();
             atmApp.InitializeData();
-            atmApp.CheckUserCredentials();
-            atmApp.Welcome();
-            // long cardNumber = Validator.Convert<long>("youre card number");
-            // Console.WriteLine($"Youre card number is {cardNumber}");
-            Utility.PressEnterToContinue();
+            atmApp.Run();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using ATM.Domain.Entities;
+using ATM.Domain.Enums;
 using ATM.Domain.Interfaces;
 using ATM.UI;
 
@@ -13,6 +14,15 @@ public class ATMApp : IUserLogin
 {
     private List<UserAccount> userAccountList = new List<UserAccount>();
     private UserAccount selectedAccount = new UserAccount();
+
+    public void Run()
+    {
+        AppScreen.Welcome();
+        CheckUserCredentials();
+        AppScreen.WelcomeCustomer(selectedAccount.FullName);
+        AppScreen.DisplayAppMenu();
+        ProcessMenuOption();
+    }
 
     public void InitializeData()
     {
@@ -97,8 +107,33 @@ public class ATMApp : IUserLogin
         }
     }
 
-    public void Welcome()
+    private void ProcessMenuOption()
     {
-        Console.WriteLine($"Welcome Back,{selectedAccount.FullName}");
+        switch (Validator.Convert<int>("an option:"))
+        {
+            case (int)AppMenu.CheckBalance: //converting enum to int explicitly
+                Console.WriteLine("Checking account balance....");
+                break;
+            case (int)AppMenu.PlaceDeposit: //converting enum to int explicitly
+                Console.WriteLine("Placing deposit....");
+                break;
+            case (int)AppMenu.MakeWithdrawal: //converting enum to int explicitly
+                Console.WriteLine("Making withdrawal....");
+                break;
+            case (int)AppMenu.InternalTransfer: //converting enum to int explicitly
+                Console.WriteLine("Making internal transfer....");
+                break;
+            case (int)AppMenu.ViewTransaction: //converting enum to int explicitly
+                Console.WriteLine("Viewing Transactions....");
+                break;
+            case (int)AppMenu.Logout: //converting enum to int explicitly
+                Console.WriteLine("Logging out....");
+                break;
+            default:
+                Console.WriteLine("default action.....");
+                break;
+        }
     }
 }
+
+
