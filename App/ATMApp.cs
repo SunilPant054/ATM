@@ -127,7 +127,9 @@ public class ATMApp : IUserLogin
                 Console.WriteLine("Viewing Transactions....");
                 break;
             case (int)AppMenu.Logout: //converting enum to int explicitly
-                Console.WriteLine("Logging out....");
+                AppScreen.LogoutProgress();
+                Utility.PrintMessage("You have successfully logget out. Please collect\n youre ATM card.");
+                Run();
                 break;
             default:
                 Utility.PrintMessage("Invalid Option.", false);

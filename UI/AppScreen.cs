@@ -70,4 +70,11 @@ public static class AppScreen
         Console.WriteLine("6. Logout                       :");
                
     }
+
+    internal static void LogoutProgress()
+    {
+        Console.WriteLine("Thank you for using My ATM App.");
+        Utility.PrintDotAnimation();
+        Console.Clear();
+    }
 }
