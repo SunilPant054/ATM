@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -10,10 +11,11 @@ using ATM.UI;
 
 namespace ATM.App;
 
-public class ATMApp : IUserLogin, IUserAccountActions
+public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
 {
     private List<UserAccount> userAccountList = new List<UserAccount>();
     private UserAccount selectedAccount = new UserAccount();
+    private List<Transaction> _listOfTransactions;
 
     public void Run()
     {
@@ -59,6 +61,8 @@ public class ATMApp : IUserLogin, IUserAccountActions
                 IsLocked = true
             }
         };
+
+        _listOfTransactions = new List<Transaction>();
     }
 
     public void CheckUserCredentials()
@@ -115,7 +119,7 @@ public class ATMApp : IUserLogin, IUserAccountActions
                 CheckBalance();
                 break;
             case (int)AppMenu.PlaceDeposit: //converting enum to int explicitly
-                Console.WriteLine("Placing deposit....");
+                PlaceDeposit();
                 break;
             case (int)AppMenu.MakeWithdrawal: //converting enum to int explicitly
                 Console.WriteLine("Making withdrawal....");
@@ -128,7 +132,9 @@ public class ATMApp : IUserLogin, IUserAccountActions
                 break;
             case (int)AppMenu.Logout: //converting enum to int explicitly
                 AppScreen.LogoutProgress();
-                Utility.PrintMessage("You have successfully logget out. Please collect\n youre ATM card.");
+                Utility.PrintMessage(
+                    "You have successfully logget out. Please collect\n youre ATM card."
+                );
                 Run();
                 break;
             default:
@@ -139,18 +145,99 @@ public class ATMApp : IUserLogin, IUserAccountActions
 
     public void CheckBalance()
     {
-        Utility.PrintMessage($"Youre account balance is: {Utility.FormatAmount(selectedAccount.AccountBalance)}");
+        Utility.PrintMessage(
+            $"Youre account balance is: {Utility.FormatAmount(selectedAccount.AccountBalance)}"
+        );
     }
 
     public void PlaceDeposit()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("\nOnly multiples of 500 and 1000 dollar allowed.\n");
+        var transaction_amt = Validator.Convert<int>($"amount {AppScreen.cur}");
+
+        //simulate counting
+        Console.WriteLine("\nChecking and counting bank notes.");
+        Utility.PrintDotAnimation();
+        Console.WriteLine("");
+
+        //some gaurd clause
+        if (transaction_amt <= 0)
+        {
+            Utility.PrintMessage("Amount needs to br greater than zero. Try Again...", false);
+            return;
+        }
+        if (transaction_amt % 500 != 0)
+        {
+            Utility.PrintMessage(
+                $"Enter deposit amount in multiples of 500 or 1000. Try Again....",
+                false
+            );
+            return;
+        }
+        if (PreviewBankNotesCount(transaction_amt) == false)
+        {
+            Utility.PrintMessage($"You have cancelled youre action.", false);
+            return;
+        }
+
+        //bind transaction details to transaction object
+        InsertTransaction(selectedAccount.Id, TransactionType.Deposit, transaction_amt, "");
+
+        //update account balance
+        selectedAccount.AccountBalance += transaction_amt;
+
+        //print success message
+        Utility.PrintMessage($"Youre deposit of {Utility.FormatAmount(transaction_amt)} was successful.", true);
     }
 
     public void MakeWithdrawal()
     {
         throw new NotImplementedException();
     }
+
+    private bool PreviewBankNotesCount(int amount)
+    {
+        int thousandNotesCount = amount / 1000;
+        int fiveHundredNotesCount = (amount % 1000) / 500;
+
+        Console.WriteLine("\nSummary");
+        Console.WriteLine("------");
+        Console.WriteLine(
+            $"{AppScreen.cur}1000 X {thousandNotesCount} = {1000 * thousandNotesCount}"
+        );
+        Console.WriteLine(
+            $"{AppScreen.cur}500 X {fiveHundredNotesCount} = {500 * fiveHundredNotesCount}"
+        );
+        Console.WriteLine($"Total amount: {Utility.FormatAmount(amount)}\n\n");
+
+        int opt = Validator.Convert<int>("1 to confirm");
+        return opt.Equals(1);
+    }
+
+    public void InsertTransaction(
+        long _UserBankAccountId,
+        TransactionType _tranType,
+        decimal _tranAmount,
+        string _desc
+    )
+    {
+        //create a new transaction object
+        var transaction = new Transaction()
+        {
+            TransactionId = Utility.GetTransactionId(),
+            UserBankAccountId = _UserBankAccountId,
+            TransactionDate = DateTime.Now,
+            TransactionType = _tranType,
+            TransactionAmount = _tranAmount,
+            Description = _desc
+        };
+
+        //add transaction object to the list 
+        _listOfTransactions.Add(transaction);
+    }
+
+    public void ViewTransaction()
+    {
+        throw new NotImplementedException();
+    }
 }
-
-

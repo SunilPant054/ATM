@@ -8,6 +8,7 @@ namespace ATM.UI;
 
 public static class AppScreen
 {
+    internal const string cur = "$ ";
     internal static void Welcome()
     {
         //sets the title of the console window
