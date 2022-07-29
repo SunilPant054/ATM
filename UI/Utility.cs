@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,6 +12,8 @@ namespace ATM.UI;
 
 public static class Utility
 {
+    private static CultureInfo culture = new CultureInfo("EN-NZ");
+
     public static string GetSecretInput(string prompt)
     {
         bool isPrompt = true;
@@ -87,5 +90,10 @@ public static class Utility
     {
         Console.WriteLine("Press enter to continue.....");
         Console.ReadLine();
+    }
+
+    public static string FormatAmount(double amt)
+    {
+        return String.Format(culture, "{0:C2}", amt);
     }
 }

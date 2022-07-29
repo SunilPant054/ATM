@@ -10,7 +10,7 @@ using ATM.UI;
 
 namespace ATM.App;
 
-public class ATMApp : IUserLogin
+public class ATMApp : IUserLogin, IUserAccountActions
 {
     private List<UserAccount> userAccountList = new List<UserAccount>();
     private UserAccount selectedAccount = new UserAccount();
@@ -112,7 +112,7 @@ public class ATMApp : IUserLogin
         switch (Validator.Convert<int>("an option:"))
         {
             case (int)AppMenu.CheckBalance: //converting enum to int explicitly
-                Console.WriteLine("Checking account balance....");
+                CheckBalance();
                 break;
             case (int)AppMenu.PlaceDeposit: //converting enum to int explicitly
                 Console.WriteLine("Placing deposit....");
@@ -135,6 +135,21 @@ public class ATMApp : IUserLogin
                 Utility.PrintMessage("Invalid Option.", false);
                 break;
         }
+    }
+
+    public void CheckBalance()
+    {
+        Utility.PrintMessage($"Youre account balance is: {Utility.FormatAmount(selectedAccount.AccountBalance)}");
+    }
+
+    public void PlaceDeposit()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void MakeWithdrawal()
+    {
+        throw new NotImplementedException();
     }
 }
 
