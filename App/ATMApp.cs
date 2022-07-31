@@ -16,6 +16,7 @@ public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
     private List<UserAccount> userAccountList = new List<UserAccount>();
     private UserAccount selectedAccount = new UserAccount();
     private List<Transaction> _listOfTransactions;
+    private const double minimumBalance = 500;
 
     public void Run()
     {
@@ -122,7 +123,7 @@ public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
                 PlaceDeposit();
                 break;
             case (int)AppMenu.MakeWithdrawal: //converting enum to int explicitly
-                Console.WriteLine("Making withdrawal....");
+                MakeWithdrawal();
                 break;
             case (int)AppMenu.InternalTransfer: //converting enum to int explicitly
                 Console.WriteLine("Making internal transfer....");
@@ -187,12 +188,71 @@ public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
         selectedAccount.AccountBalance += transaction_amt;
 
         //print success message
-        Utility.PrintMessage($"Youre deposit of {Utility.FormatAmount(transaction_amt)} was successful.", true);
+        Utility.PrintMessage(
+            $"Youre deposit of {Utility.FormatAmount(transaction_amt)} was successful.",
+            true
+        );
     }
 
     public void MakeWithdrawal()
     {
-        throw new NotImplementedException();
+        var transaction_amt = 0;
+        int selectedAmount = AppScreen.SelectAmount();
+        if (selectedAmount == -1)
+        {
+            selectedAmount = AppScreen.SelectAmount();
+        }
+        else if (selectedAmount != 0)
+        {
+            transaction_amt = selectedAmount;
+        }
+        else
+        {
+            transaction_amt = Validator.Convert<int>($"amount {AppScreen.cur}");
+        }
+
+        //input vaidation
+        if (transaction_amt <= 0)
+        {
+            Utility.PrintMessage("Amount needs to be greater than zero. Try Again!!", false);
+            return;
+        }
+        if (transaction_amt % 500 != 0)
+        {
+            Utility.PrintMessage(
+                "You can only withdraw amount inmultiples of 500 0r 1000 dollars. Try Again!!",
+                false
+            );
+            return;
+        }
+        //Business Logic validation
+        if (transaction_amt > selectedAccount.AccountBalance)
+        {
+            Utility.PrintMessage(
+                $"Withdrawal failed. Youre balance is too low to withdraw"
+                    + $"{Utility.FormatAmount(transaction_amt)}",
+                false
+            );
+            return;
+        }
+        if ((selectedAccount.AccountBalance - transaction_amt) < minimumBalance)
+        {
+            Utility.PrintMessage(
+                $"Withdrawal failed. Youre account needs to have "
+                    + $"minimum {Utility.FormatAmount(minimumBalance)}",
+                false
+            );
+            return;
+        }
+        //Bind withdrawal details to transaction object
+        InsertTransaction(selectedAccount.Id, TransactionType.Withdrawal, -transaction_amt, "");
+        //update account balance
+        selectedAccount.AccountBalance -= transaction_amt;
+        //success message
+        Utility.PrintMessage(
+            $"You have successfully withdrawn" + $"{Utility.FormatAmount(transaction_amt)}.",
+            true
+        );
     }
 
     private bool PreviewBankNotesCount(int amount)
@@ -232,7 +292,7 @@ public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
             Description = _desc
         };
 
-        //add transaction object to the list 
+        //add transaction object to the list
         _listOfTransactions.Add(transaction);
     }
 
