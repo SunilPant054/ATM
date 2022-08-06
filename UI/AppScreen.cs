@@ -7,7 +7,7 @@ using ATM.Domain.Entities;
 
 namespace ATM.UI;
 
-public static class AppScreen
+public class AppScreen
 {
     internal const string cur = "$ ";
 
@@ -126,5 +126,16 @@ public static class AppScreen
                 return -1;
                 break;
         }
+    }
+
+    internal InternalTransfer InternalTransferForm()
+    {
+        var internalTransfer = new InternalTransfer();
+        internalTransfer.ReciepientBankAccountNumber = Validator.Convert<long>(
+            "recipient's account number:"
+        );
+        internalTransfer.TransferAmount = Validator.Convert<decimal>($"amount {cur}");
+        internalTransfer.ReciepientBankAccountName = Utility.GetUserInput("recipient's name:");
+        return internalTransfer;
     }
 }
